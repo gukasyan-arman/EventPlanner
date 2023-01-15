@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="16dp"
+    tools:context=".ui.editevent.EditEventFragment">
+
+    <TextView
+        android:id="@+id/addEventTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/main_text"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp"
+        android:text="@string/edit_event" />
+
+    <EditText
+        android:id="@+id/enterTitleEt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/enter_title"
+        android:inputType="text"
+        android:minHeight="48dp"
+        android:minEms="0"
+        android:textColor="@color/main_text" />
+
+    <EditText
+        android:id="@+id/enterCityEt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/enter_city"
+        android:inputType="text"
+        android:minHeight="48dp"
+        android:minEms="0"
+        android:textColor="@color/main_text" />
+
+    <EditText
+        android:id="@+id/enterDateEt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/enter_date"
+        android:inputType="datetime"
+        android:minHeight="48dp"
+        android:minEms="0"
+        android:textColor="@color/main_text" />
+
+    <EditText
+        android:id="@+id/enterDescriptionEt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/enter_desc"
+        android:inputType="text"
+        android:minHeight="48dp"
+        android:textColor="@color/main_text" />
+
+    <LinearLayout
+        android:id="@+id/buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/cancelBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="16dp"
+            android:text="@string/cancel"
+            android:backgroundTint="@color/punch"/>
+
+        <Button
+            android:id="@+id/saveBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="16dp"
+            android:text="@string/save"
+            android:backgroundTint="@color/warm_yellow"/>
+    </LinearLayout>
+
+
+</LinearLayout>
