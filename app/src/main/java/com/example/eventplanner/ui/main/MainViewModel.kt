@@ -1,7 +1,6 @@
 package com.example.eventplanner.ui.main
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.*
 import com.example.eventplanner.data.db.EventsRoomDatabase
 import com.example.eventplanner.data.db.repository.Repository
@@ -20,8 +19,12 @@ class MainViewModel @Inject constructor
     //db
     private val repository: Repository
     val allEvents: LiveData<List<Event>>
+//    val event: MutableLiveData<Event>
+    val city: MutableLiveData<String>
+    val date: MutableLiveData<String>
 
     //network
+    val weatherLiveData: MutableLiveData<Weather> = MutableLiveData()
     private val _resp = MutableLiveData<Weather>()
     val weatherResp: LiveData<Weather>
         get() = _resp
@@ -30,6 +33,9 @@ class MainViewModel @Inject constructor
         val dao = EventsRoomDatabase.invoke(application).getEventDao()
         repository = Repository(dao)
         allEvents = repository.allEvents
+        city = MutableLiveData()
+        date = MutableLiveData()
+//        event = MutableLiveData<Event>()
 //        getWeather()
     }
 
@@ -53,14 +59,13 @@ class MainViewModel @Inject constructor
         repository.clearEvent()
     }
 
-//    private fun getWeather() = viewModelScope.launch (Dispatchers.IO) {
-//        weatherRepository.getWeather(event.value?.city.toString()).let { response ->
-//            if (response.isSuccessful) {
-//                _resp.postValue(response.body())
-//            } else {
-//                Log.d("getWeather", "getWeather() method error: ${response.message()}")
-//            }
-//        }
-//    }
+    fun getWeather(city: String) = viewModelScope.launch(Dispatchers.IO) {
+        val response = weatherRepository.getWeather(city)
+        if (response.isSuccessful) {
+            response.body().let {res ->
+                weatherLiveData.postValue(res)
+            }
+        }
+    }
 
 }

@@ -33,6 +33,9 @@ class EditEventFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val temperature = viewModel.weatherLiveData.value?.current?.temp_c
+        val weather = viewModel.weatherLiveData.value?.current?.condition?.text
+
         initEditTextFields()
 
         binding.cancelBtn.setOnClickListener {
@@ -45,8 +48,8 @@ class EditEventFragment : Fragment() {
                 city = binding.enterCityEt.text.trim().toString(),
                 title = binding.enterTitleEt.text.trim().toString(),
                 description = binding.enterDescriptionEt.text.trim().toString(),
-                temperature = 5.5,
-                weather = "Sunny",
+                temperature = temperature,
+                weather = weather,
                 date = binding.enterDateEt.text.trim().toString()
             )
             viewModel.updateEvent(updatedEvent)
