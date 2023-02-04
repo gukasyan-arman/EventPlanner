@@ -13,4 +13,5 @@
     <string name="save">Save</string>
     <string name="visited_the_event">Visited the event</string>
     <string name="event_was_visited">Event was visited</string>
+    <string name="weather_icon">weather icon</string>
 </resources>
