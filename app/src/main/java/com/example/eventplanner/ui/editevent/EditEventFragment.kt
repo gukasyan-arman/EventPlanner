@@ -2,7 +2,6 @@ package com.example.eventplanner.ui.editevent
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -33,30 +32,42 @@ class EditEventFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val temperature = viewModel.weatherLiveData.value?.current?.temp_c
-        val weather = viewModel.weatherLiveData.value?.current?.condition?.text
-
         initEditTextFields()
+
+        var temperature: Double
+        var weather: String
 
         binding.cancelBtn.setOnClickListener {
             findNavController().navigate(R.id.action_editEventFragment_to_mainFragment)
         }
 
         binding.saveBtn.setOnClickListener {
-            val updatedEvent = Event(
-                id = arguments?.getString("id")!!,
-                city = binding.enterCityEt.text.trim().toString(),
-                title = binding.enterTitleEt.text.trim().toString(),
-                description = binding.enterDescriptionEt.text.trim().toString(),
-                temperature = temperature,
-                weather = weather,
-                date = binding.enterDateEt.text.trim().toString()
-            )
-            viewModel.updateEvent(updatedEvent)
-            Log.d("eventItem", "eventItem = $updatedEvent")
-            Snackbar.make(view, "event updated successfully", Snackbar.LENGTH_SHORT).show()
-            clearEditText()
-            findNavController().navigate(R.id.action_editEventFragment_to_mainFragment)
+            val city = binding.enterCityEt.text.trim().toString()
+            val date = binding.enterDateEt.text.trim().toString()
+            viewModel.city.postValue(city)
+            viewModel.date.postValue(date)
+
+            viewModel.getWeather(city)
+
+            viewModel.weatherLiveData.observe(viewLifecycleOwner) {
+                temperature = it.current.temp_c
+                weather = it.current.condition.text
+
+                val updatedEvent = Event(
+                    id = arguments?.getString("id")!!,
+                    city = binding.enterCityEt.text.trim().toString(),
+                    title = binding.enterTitleEt.text.trim().toString(),
+                    description = binding.enterDescriptionEt.text.trim().toString(),
+                    temperature = temperature,
+                    weather = weather,
+                    date = binding.enterDateEt.text.trim().toString()
+                )
+                viewModel.updateEvent(updatedEvent)
+                Snackbar.make(view, "event updated successfully", Snackbar.LENGTH_SHORT).show()
+                clearEditText()
+                findNavController().navigate(R.id.action_editEventFragment_to_mainFragment)
+            }
+
         }
     }
 

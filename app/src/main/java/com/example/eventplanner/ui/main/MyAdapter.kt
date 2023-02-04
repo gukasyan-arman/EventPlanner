@@ -36,10 +36,10 @@ class MyAdapter(
             cardEventDate.text = currentEvent.date
             temperature.text = currentEvent.temperature.toString()
             when (currentEvent.weather) {
-                "cloud" -> Picasso.get().load(R.drawable.cloud).into(weatherIcon)
-                "little_rainy" -> Picasso.get().load(R.drawable.little_rainy).into(weatherIcon)
-                "little_cloudy" -> Picasso.get().load(R.drawable.little_cloudy).into(weatherIcon)
-                "sun" -> Picasso.get().load(R.drawable.sun).into(weatherIcon)
+                "Mist" -> Picasso.get().load(R.drawable.cloud).into(weatherIcon)
+                "Rainy" -> Picasso.get().load(R.drawable.little_rainy).into(weatherIcon)
+                "Partly cloudy" -> Picasso.get().load(R.drawable.little_cloudy).into(weatherIcon)
+                "Sunny" -> Picasso.get().load(R.drawable.sun).into(weatherIcon)
                 else -> Picasso.get().load(R.drawable.cloud).into(weatherIcon)
             }
 
@@ -70,7 +70,6 @@ class MyAdapter(
                     holder.itemView.alpha = 1F
                     holder.binding.visitedTv.text = "Event not visited"
                 }
-
                 val message = if (isChecked) "Switch1:ON" else "Switch1:OFF"
                 Log.d("itemMessage", message)
             }

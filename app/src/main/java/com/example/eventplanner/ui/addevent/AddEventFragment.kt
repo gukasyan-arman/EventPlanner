@@ -32,36 +32,44 @@ class AddEventFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val temperature = viewModel.weatherLiveData.value?.current?.temp_c
-        val weather = viewModel.weatherLiveData.value?.current?.condition?.text
+        var temperature: Double
+        var weather: String
 
         binding.cancelBtn.setOnClickListener {
             findNavController().navigate(R.id.action_addNoteFragment_to_mainFragment)
         }
 
         binding.saveBtn.setOnClickListener {
-
             val city = binding.enterCityEt.text.trim().toString()
             val date = binding.enterDateEt.text.trim().toString()
             viewModel.city.postValue(city)
             viewModel.date.postValue(date)
 
-            val event = Event(
-                city = city,
-                title = binding.enterTitleEt.text.trim().toString(),
-                description = binding.enterDescriptionEt.text.trim().toString(),
-                temperature = viewModel.weatherLiveData.value?.current?.temp_c,
-                weather = weather,
-                date = date
-            )
-            viewModel.insertEvent(event)
-            Log.d("eventItem", "eventItem = $event")
-            Log.d("eventItem", "allEventsList = ${viewModel.allEvents.value}")
-            Snackbar.make(view, "event added successfully", Snackbar.LENGTH_SHORT).show()
+            viewModel.getWeather(city)
 
-            clearEditText()
+            viewModel.weatherLiveData.observe(viewLifecycleOwner) {
+                temperature = it.current.temp_c
+                weather = it.current.condition.text
 
-            findNavController().navigate(R.id.action_addNoteFragment_to_mainFragment)
+                Log.d("eventItem", "temperature = $temperature")
+                Log.d("eventItem", "weather = $weather")
+
+                val event = Event(
+                    city = city,
+                    title = binding.enterTitleEt.text.trim().toString(),
+                    description = binding.enterDescriptionEt.text.trim().toString(),
+                    temperature = temperature,
+                    weather = weather,
+                    date = date
+                )
+                viewModel.insertEvent(event)
+                Log.d("eventItem", "eventItem = $event")
+                Snackbar.make(view, "event added successfully", Snackbar.LENGTH_SHORT).show()
+
+                clearEditText()
+
+                findNavController().navigate(R.id.action_addNoteFragment_to_mainFragment)
+            }
         }
     }
 

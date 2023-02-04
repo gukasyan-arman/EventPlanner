@@ -39,9 +39,6 @@ class MainFragment : Fragment(), MyAdapter.EventItemClickListener,
             list.let {
                 eventAdapter.updateList(it)
             }
-            list.map {event ->
-                event.temperature = viewModel.weatherResp.value?.current?.temp_c
-            }
             Log.d("allEvents", "$list")
         }
 
@@ -65,6 +62,8 @@ class MainFragment : Fragment(), MyAdapter.EventItemClickListener,
         bundle.putString("city", event.city)
         bundle.putString("description", event.description)
         bundle.putString("date", event.date)
+        event.temperature?.let { bundle.putDouble("temperature", it) }
+        bundle.putString("weather", event.weather)
         Toast.makeText(requireContext(), "$event click", Toast.LENGTH_LONG).show()
         findNavController().navigate(R.id.action_mainFragment_to_detailFragment, bundle)
     }
@@ -94,8 +93,8 @@ class MainFragment : Fragment(), MyAdapter.EventItemClickListener,
                 city = event.city,
                 title = event.title,
                 description = event.description,
-                temperature = 5.5,
-                weather = "cloudy",
+                temperature = event.temperature,
+                weather = event.weather,
                 date = event.date
             ))
         bundle.putBoolean("isVisited", event.isVisited!!)

@@ -1,6 +1,7 @@
 package com.example.eventplanner.ui.main
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.*
 import com.example.eventplanner.data.db.EventsRoomDatabase
 import com.example.eventplanner.data.db.repository.Repository
@@ -19,15 +20,13 @@ class MainViewModel @Inject constructor
     //db
     private val repository: Repository
     val allEvents: LiveData<List<Event>>
-//    val event: MutableLiveData<Event>
     val city: MutableLiveData<String>
     val date: MutableLiveData<String>
 
     //network
-    val weatherLiveData: MutableLiveData<Weather> = MutableLiveData()
-    private val _resp = MutableLiveData<Weather>()
-    val weatherResp: LiveData<Weather>
-        get() = _resp
+    private val _weatherLiveData = MutableLiveData<Weather>()
+    val weatherLiveData: LiveData<Weather>
+        get() = _weatherLiveData
 
     init {
         val dao = EventsRoomDatabase.invoke(application).getEventDao()
@@ -35,8 +34,6 @@ class MainViewModel @Inject constructor
         allEvents = repository.allEvents
         city = MutableLiveData()
         date = MutableLiveData()
-//        event = MutableLiveData<Event>()
-//        getWeather()
     }
 
     fun updateEvent(event: Event) = viewModelScope.launch (Dispatchers.IO) {
@@ -51,10 +48,6 @@ class MainViewModel @Inject constructor
          repository.insertEvent(event)
     }
 
-    fun deleteEventById(id: Int) = viewModelScope.launch(Dispatchers.IO) {
-        repository.deleteEventById(id)
-    }
-
     fun clearEvent() = viewModelScope.launch(Dispatchers.IO) {
         repository.clearEvent()
     }
@@ -63,9 +56,11 @@ class MainViewModel @Inject constructor
         val response = weatherRepository.getWeather(city)
         if (response.isSuccessful) {
             response.body().let {res ->
-                weatherLiveData.postValue(res)
+                _weatherLiveData.postValue(res)
+                Log.d("eventItem", "Response success")
             }
+        } else {
+            Log.d("eventItem", "Response error")
         }
     }
-
 }
