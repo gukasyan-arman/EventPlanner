@@ -9,6 +9,7 @@ import com.example.eventplanner.data.db.models.Event
 import com.example.eventplanner.data.network.WeatherRepository
 import com.example.eventplanner.data.network.models.Weather
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -52,7 +53,11 @@ class MainViewModel @Inject constructor
         repository.clearEvent()
     }
 
-    fun getWeather(city: String) = viewModelScope.launch(Dispatchers.IO) {
+    private val coroutineExceptionHandler = CoroutineExceptionHandler{ _, throwable ->
+        throwable.printStackTrace()
+    }
+
+    fun getWeather(city: String) = viewModelScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
         val response = weatherRepository.getWeather(city)
         if (response.isSuccessful) {
             response.body().let {res ->
