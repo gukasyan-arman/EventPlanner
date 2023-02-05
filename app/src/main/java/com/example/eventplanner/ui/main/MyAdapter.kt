@@ -1,7 +1,6 @@
 package com.example.eventplanner.ui.main
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -44,11 +43,11 @@ class MyAdapter(
             }
 
             if (currentEvent.isVisited == true) {
-                visitedSwitch.isChecked = true
+                holder.binding.visitBtn.setImageResource(R.drawable.baseline_close_24)
                 holder.itemView.alpha = 0.6F
                 holder.binding.visitedTv.text = "Event was visited"
             } else {
-                visitedSwitch.isChecked = false
+                holder.binding.visitBtn.setImageResource(R.drawable.ic_baseline_done_24)
                 holder.itemView.alpha = 1F
                 holder.binding.visitedTv.text = "Event not visited"
             }
@@ -61,17 +60,15 @@ class MyAdapter(
                 eventClickUpdateInterface.onUpdateIconClick(eventList[position])
             }
 
-            visitedSwitch.setOnCheckedChangeListener { _, isChecked ->
+            visitBtn.setOnClickListener {
                 eventVisitInterface.onVisitIconClick(eventList[position])
-                if (isChecked) {
+                if (eventList[position].isVisited == true) {
                     holder.itemView.alpha = 0.6F
                     holder.binding.visitedTv.text = "Event was visited"
                 } else {
                     holder.itemView.alpha = 1F
                     holder.binding.visitedTv.text = "Event not visited"
                 }
-                val message = if (isChecked) "Switch1:ON" else "Switch1:OFF"
-                Log.d("itemMessage", message)
             }
         }
 

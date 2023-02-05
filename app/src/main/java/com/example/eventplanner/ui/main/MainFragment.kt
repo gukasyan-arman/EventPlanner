@@ -63,6 +63,7 @@ class MainFragment : Fragment(), MyAdapter.EventItemClickListener,
         bundle.putString("description", event.description)
         bundle.putString("date", event.date)
         bundle.putDouble("temperature", event.temperature!!)
+        bundle.putBoolean("isVisited", event.isVisited!!)
         bundle.putString("weather", event.weather)
         Toast.makeText(requireContext(), "$event click", Toast.LENGTH_LONG).show()
         findNavController().navigate(R.id.action_mainFragment_to_detailFragment, bundle)

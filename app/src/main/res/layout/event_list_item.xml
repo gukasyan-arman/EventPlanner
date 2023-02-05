@@ -23,7 +23,8 @@
             android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/cloud" />
+            tools:src="@drawable/cloud"
+            android:contentDescription="@string/weather_icon" />
 
         <TextView
             android:id="@+id/temperature"
@@ -82,16 +83,16 @@
 
         <TextView
             android:id="@+id/visitedTv"
-            android:gravity="center_vertical"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="8dp"
             android:text="@string/event_was_visited"
+            android:textAlignment="textStart"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/visitedSwitch"
+            app:layout_constraintEnd_toStartOf="@+id/visitBtn"
             app:layout_constraintStart_toEndOf="@+id/weatherIcon"
             app:layout_constraintTop_toBottomOf="@+id/cardEventCity" />
 
@@ -117,17 +118,20 @@
             app:layout_constraintTop_toBottomOf="@+id/editEvent"
             app:srcCompat="@drawable/ic_baseline_delete_24" />
 
-        <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/visitedSwitch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageButton
+            android:id="@+id/visitBtn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="80dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="8dp"
+            android:backgroundTint="@color/warm_yellow"
+            android:src="@drawable/ic_baseline_done_24"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardEventCity"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintEnd_toEndOf="@+id/deleteEvent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/deleteEvent"
+            app:layout_constraintTop_toBottomOf="@+id/deleteEvent"
+            app:tint="@color/black" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

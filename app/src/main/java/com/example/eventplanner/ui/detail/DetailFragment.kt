@@ -1,5 +1,6 @@
 package com.example.eventplanner.ui.detail
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -28,12 +29,19 @@ class DetailFragment : Fragment() {
 
     }
 
+    @SuppressLint("SetTextI18n")
     private fun initFields() {
         binding.detailTitle.text = arguments?.getString("title") ?: "title"
         binding.detailCity.text = arguments?.getString("city") ?: "city"
         binding.detailDate.text = arguments?.getString("date") ?: "date"
         binding.detailTemperature.text = arguments?.getDouble("temperature").toString()
         binding.detailDescription.text = arguments?.getString("description") ?: "description"
+
+        if (arguments?.getBoolean("isVisited") == true) {
+            binding.detailVisited.text = "Event was visited"
+        } else {
+            binding.detailVisited.text = "Event not visited"
+        }
 
         when (arguments?.getString("weather")) {
             "Mist" -> Picasso.get().load(R.drawable.cloud).into(binding.detailImage)

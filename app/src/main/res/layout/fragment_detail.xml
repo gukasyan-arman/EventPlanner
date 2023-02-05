@@ -75,6 +75,17 @@
         tools:text="19/01/2023" />
 
     <TextView
+        android:id="@+id/detailVisited"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/event_not_visited"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/detailDate" />
+
+    <TextView
         android:id="@+id/detailDescription"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -86,8 +97,10 @@
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/detailDate"
+        app:layout_constraintTop_toBottomOf="@+id/detailVisited"
+        app:layout_constraintVertical_bias="1.0"
         tools:text="Now i'm 22 y.o." />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
